@@ -1,9 +1,21 @@
 var express = require("express");
 var router = express.Router();
+const userModel = require("../models/userModel");
+const postModel = require("../models/postModel");
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+router.get("/", function (req, res) {
+  res.render("index", { title: "SKPAS" });
+});
+
+router.get("/createuser", async function (req, res, next) {
+  let createdUser = await userModel.create({
+    username: "Skaps",
+    password: "hehe",
+    posts: [],
+    email: "msudaisk664@gmail.com",
+    fullName: "Sudais khan",
+  });
+  res.send(createdUser);
 });
 
 module.exports = router;
