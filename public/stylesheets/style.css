@@ -6,3 +6,16 @@ body {
 a {
   color: #00B7FF;
 }
+.upbtn{
+  text-decoration: none ;
+  color: black;
+  top: 50px;
+  left: 140px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  width: 126px;
+  padding: 11px 20px;
+  background-color: rgb(241, 236, 236);
+  border-radius: 20px;
+}
