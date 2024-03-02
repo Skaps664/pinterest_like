@@ -4,7 +4,7 @@ const userModel = require("../models/userModel");
 const postModel = require("../models/postModel");
 
 router.get("/", function (req, res) {
-  res.render("index", { title: "SKPAS" });
+  res.render("index", { title: "LEARNING" });
 });
 
 router.get("/createuser", async function (req, res, next) {
