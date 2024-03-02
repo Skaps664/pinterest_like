@@ -7,6 +7,8 @@ const localStrategy = require("passport-local");
 
 passport.use(new localStrategy(userModel.authenticate()));
 
+const upload = require("./multer");
+
 router.get("/", function (req, res) {
   res.render("index", { title: "Pinterest" });
 });
@@ -18,9 +20,12 @@ router.get("/login", function (req, res) {
 });
 
 router.get("/profile", isLoggedIn, async function (req, res, next) {
-  const user = await userModel.findOne({
-    username: req.session.passport.user,
-  });
+  const user = await userModel
+    .findOne({
+      username: req.session.passport.user,
+    })
+    .populate("posts");
+  console.log(user);
   res.render("profile", { user });
 });
 
@@ -72,6 +77,28 @@ router.post(
     failureFlash: true,
   }),
   function (req, res) {}
+);
+
+router.post(
+  "/upload",
+  isLoggedIn,
+  upload.single("file"),
+  async function (req, res) {
+    if (!req.file) {
+      return res.status(400).send("No files were uploaded");
+    }
+    const user = await userModel.findOne({
+      username: req.session.passport.user,
+    });
+    const postData = await postModel.create({
+      image: req.file.filename,
+      postText: req.body.caption,
+      user: user._id,
+    });
+    await user.posts.push(postData);
+    await user.save();
+    res.send("Done");
+  }
 );
 
 router.get("/logout", function (req, res) {
