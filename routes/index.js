@@ -18,7 +18,11 @@ router.get("/login", function (req, res) {
 });
 
 router.get("/profile", isLoggedIn, function (req, res, next) {
-  res.send("profile");
+  res.render("profile");
+});
+
+router.get("/feed", isLoggedIn, function (req, res, next) {
+  res.render("feed");
 });
 
 // router.get("/createuser", async function (req, res, next) {
@@ -52,7 +56,7 @@ router.post("/signup", function (req, res) {
   });
   userModel.register(userData, req.body.password).then(function () {
     passport.authenticate("local")(req, res, function () {
-      res.redirect("/profile");
+      res.redirect("/login");
     });
   });
 });
@@ -60,7 +64,7 @@ router.post("/signup", function (req, res) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/profile",
+    successRedirect: "/feed",
     failureRedirect: "/",
   }),
   function (req, res) {}
