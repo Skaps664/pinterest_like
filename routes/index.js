@@ -13,9 +13,19 @@ router.get("/createuser", async function (req, res, next) {
     password: "hehe",
     posts: [],
     email: "msudaisk664@gmail.com",
-    fullName: "Sudais khan",
+    fullName: "Omer khan",
   });
   res.send(createdUser);
 });
 
+router.get("/createpost", async function (req, res, next) {
+  let createdPost = await postModel.create({
+    postText: "This is first test post",
+    user: "65e2cd63d5f1c71c7b25c84e",
+  });
+  let user = await userModel.findOne({ _id: "65e2cd63d5f1c71c7b25c84e" });
+  user.posts.push(createdPost._id);
+  user.save();
+  res.send("done");
+});
 module.exports = router;
