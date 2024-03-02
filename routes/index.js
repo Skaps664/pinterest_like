@@ -97,7 +97,7 @@ router.post(
     });
     await user.posts.push(postData);
     await user.save();
-    res.send("Done");
+    res.redirect("/profile");
   }
 );
 

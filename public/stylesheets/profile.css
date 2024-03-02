@@ -105,3 +105,9 @@ body {
 #btn:hover {
   background: #2A26FF;
 }
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap:  20px;
+  align-items: start;
+}
